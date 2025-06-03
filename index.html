@@ -6,6 +6,12 @@
   <title>Selamat Ulang Tahun, Sayang!</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
     .fade-in {
       opacity: 0;
       animation: fadeIn 2s ease-in forwards;
@@ -16,10 +22,27 @@
         opacity: 1;
       }
     }
+
+    canvas#hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+    }
   </style>
 </head>
 <body class="bg-pink-100 min-h-screen flex items-center justify-center">
-  <div class="max-w-xl text-center bg-white p-10 rounded-2xl shadow-xl fade-in">
+  <!-- Canvas animasi hati -->
+  <canvas id="hearts"></canvas>
+
+  <!-- Konten utama -->
+  <div class="content max-w-xl text-center bg-white p-10 rounded-2xl shadow-xl fade-in">
     <h1 class="text-4xl font-bold text-pink-600 mb-4">Selamat Ulang Tahun, Cintaku 💖</h1>
     <p class="text-lg text-gray-700 mb-6 leading-relaxed">
       Hari ini adalah hari yang sangat spesial karena orang yang paling aku cintai lahir ke dunia ini. 
@@ -36,7 +59,20 @@
       <p class="text-2xl font-semibold text-pink-700 mb-2">Aku cinta kamu ❤️</p>
       <img src="https://media.giphy.com/media/3ohs4BSacFKI7A717y/giphy.gif" alt="Love gif" class="mx-auto rounded-lg shadow-md w-64 h-auto" />
     </div>
+
+    <!-- Kontrol Musik -->
+    <div class="mt-6">
+      <button onclick="toggleMusic()" class="bg-pink-200 hover:bg-pink-300 text-pink-800 font-medium py-1 px-4 rounded-full transition-all">
+        🎵 Play/Pause Musik
+      </button>
+    </div>
   </div>
+
+  <!-- Audio -->
+  <audio id="bg-music" loop>
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_5f0e8b1c98.mp3" type="audio/mpeg">
+    Browser kamu tidak mendukung audio.
+  </audio>
 
   <script>
     function showSurprise() {
@@ -44,6 +80,70 @@
       surprise.classList.remove("hidden");
       surprise.classList.add("fade-in");
     }
+
+    function toggleMusic() {
+      const music = document.getElementById("bg-music");
+      if (music.paused) {
+        music.play();
+      } else {
+        music.pause();
+      }
+    }
+
+    // Autoplay musik setelah user interaksi (menghindari blokir autoplay browser)
+    document.addEventListener('click', function once() {
+      const music = document.getElementById("bg-music");
+      music.play().catch(() => {}); // silent fail
+      document.removeEventListener('click', once);
+    });
+
+    // Animasi hati
+    const canvas = document.getElementById("hearts");
+    const ctx = canvas.getContext("2d");
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    window.addEventListener("resize", () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const hearts = Array.from({ length: 50 }).map(() => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      size: 10 + Math.random() * 10,
+      speed: 1 + Math.random() * 2,
+      opacity: 0.5 + Math.random() * 0.5,
+    }));
+
+    function drawHeart(x, y, size, opacity) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.scale(size / 30, size / 30);
+      ctx.beginPath();
+      ctx.globalAlpha = opacity;
+      ctx.fillStyle = "#ff69b4";
+      ctx.moveTo(0, -10);
+      ctx.bezierCurveTo(12, -30, 45, -5, 0, 30);
+      ctx.bezierCurveTo(-45, -5, -12, -30, 0, -10);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      for (let h of hearts) {
+        drawHeart(h.x, h.y, h.size, h.opacity);
+        h.y += h.speed;
+        if (h.y > height + 30) {
+          h.y = -30;
+          h.x = Math.random() * width;
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    animate();
   </script>
 </body>
 </html>
