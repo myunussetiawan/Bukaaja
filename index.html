@@ -37,7 +37,7 @@
     }
 
     .photo-frame {
-      border: 8px solid #f472b6; /* pink-400 */
+      border: 8px solid #f472b6;
       padding: 5px;
       border-radius: 1.5rem;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
@@ -51,31 +51,49 @@
 
   <!-- Konten utama -->
   <div class="content max-w-xl text-center bg-white p-8 rounded-2xl shadow-xl fade-in">
-    <!-- Foto dalam frame -->
+    <!-- Foto pacar -->
     <div class="photo-frame inline-block">
       <img src="piaa.jpeg" alt="Foto Pacarku" class="rounded-xl w-64 h-64 object-cover" />
     </div>
 
     <h1 class="text-4xl font-bold text-pink-600 mb-4">Selamat Ulang Tahun, Cintaku 💖</h1>
+
     <p class="text-lg text-gray-700 mb-6 leading-relaxed">
-      Hari ini adalah hari yang sangat spesial karena orang yang paling aku cintai lahir ke dunia ini. 
-      Terima kasih sudah hadir dalam hidupku dan membuat semuanya lebih indah.
+      Hari ini adalah hari yang sangat spesial karena orang yang paling aku cintai lahir ke dunia ini. Terima kasih sudah hadir dalam hidupku dan membuat semuanya lebih indah.
     </p>
+
     <p class="text-lg text-gray-700 mb-6 italic">
       "Kamu adalah alasan senyumku setiap hari. Aku bersyukur bisa memilikimu. Selamat ulang tahun, sayangku! 🎂💕"
     </p>
-    <button onclick="showSurprise()" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-6 rounded-full transition-all duration-300">
+
+    <!-- Input kata-kata -->
+    <div class="mb-4">
+      <textarea id="customMessage" placeholder="Tulis pesan romantismu di sini..." rows="4"
+        class="w-full p-3 rounded-lg border border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-400 resize-none"></textarea>
+      <button onclick="showCustomMessage()" class="mt-3 bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-6 rounded-full transition">
+        Tampilkan Pesan 💌
+      </button>
+    </div>
+
+    <!-- Tampilan pesan -->
+    <div id="displayMessage" class="text-pink-800 font-medium mt-4 text-lg hidden"></div>
+
+    <!-- Tombol kejutan -->
+    <button onclick="showSurprise()" class="bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-6 rounded-full mt-4 transition-all">
       Klik untuk Kejutan 🎉
     </button>
 
+    <!-- Tampilan kejutan -->
     <div id="surprise" class="mt-6 hidden">
       <p class="text-2xl font-semibold text-pink-700 mb-2">Aku cinta kamu ❤️</p>
-      <img src="https://media.giphy.com/media/3ohs4BSacFKI7A717y/giphy.gif" alt="Love gif" class="mx-auto rounded-lg shadow-md w-64 h-auto" />
+      <img src="https://media.giphy.com/media/3ohs4BSacFKI7A717y/giphy.gif" alt="Love gif"
+        class="mx-auto rounded-lg shadow-md w-64 h-auto" />
     </div>
 
     <!-- Kontrol Musik -->
     <div class="mt-6">
-      <button onclick="toggleMusic()" class="bg-pink-200 hover:bg-pink-300 text-pink-800 font-medium py-1 px-4 rounded-full transition-all">
+      <button onclick="toggleMusic()"
+        class="bg-pink-200 hover:bg-pink-300 text-pink-800 font-medium py-1 px-4 rounded-full transition-all">
         🎵 Play/Pause Musik
       </button>
     </div>
@@ -108,6 +126,15 @@
       music.play().catch(() => {});
       document.removeEventListener('click', once);
     });
+
+    function showCustomMessage() {
+      const msg = document.getElementById("customMessage").value;
+      const display = document.getElementById("displayMessage");
+      if (msg.trim() !== "") {
+        display.textContent = `💌 ${msg}`;
+        display.classList.remove("hidden");
+      }
+    }
 
     // Animasi hati
     const canvas = document.getElementById("hearts");
