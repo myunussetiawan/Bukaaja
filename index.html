@@ -35,6 +35,14 @@
       position: relative;
       z-index: 10;
     }
+
+    .photo-frame {
+      border: 8px solid #f472b6; /* pink-400 */
+      padding: 5px;
+      border-radius: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      margin-bottom: 1rem;
+    }
   </style>
 </head>
 <body class="bg-pink-100 min-h-screen flex items-center justify-center">
@@ -42,7 +50,12 @@
   <canvas id="hearts"></canvas>
 
   <!-- Konten utama -->
-  <div class="content max-w-xl text-center bg-white p-10 rounded-2xl shadow-xl fade-in">
+  <div class="content max-w-xl text-center bg-white p-8 rounded-2xl shadow-xl fade-in">
+    <!-- Foto dalam frame -->
+    <div class="photo-frame inline-block">
+      <img src="https://i.imgur.com/uVwRrXU.jpeg" alt="Foto Pacarku" class="rounded-xl w-64 h-64 object-cover" />
+    </div>
+
     <h1 class="text-4xl font-bold text-pink-600 mb-4">Selamat Ulang Tahun, Cintaku 💖</h1>
     <p class="text-lg text-gray-700 mb-6 leading-relaxed">
       Hari ini adalah hari yang sangat spesial karena orang yang paling aku cintai lahir ke dunia ini. 
@@ -90,10 +103,9 @@
       }
     }
 
-    // Autoplay musik setelah user interaksi (menghindari blokir autoplay browser)
     document.addEventListener('click', function once() {
       const music = document.getElementById("bg-music");
-      music.play().catch(() => {}); // silent fail
+      music.play().catch(() => {});
       document.removeEventListener('click', once);
     });
 
