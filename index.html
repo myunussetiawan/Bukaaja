@@ -43,6 +43,65 @@
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
       margin-bottom: 1rem;
     }
+<script>
+  const container = document.getElementById('cake-container');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  container.appendChild(renderer.domElement);
+
+  // Pencahayaan
+  const light = new THREE.PointLight(0xffffff, 1);
+  light.position.set(10, 10, 10);
+  scene.add(light);
+
+  // Kue: Silinder 3 tumpuk
+  function createCakeLayer(radius, height, color, yOffset) {
+    const geometry = new THREE.CylinderGeometry(radius, radius, height, 32);
+    const material = new THREE.MeshStandardMaterial({ color });
+    const cylinder = new THREE.Mesh(geometry, material);
+    cylinder.position.y = yOffset;
+    scene.add(cylinder);
+  }
+
+  createCakeLayer(2, 1, '#ff69b4', 0);    // dasar
+  createCakeLayer(1.5, 1, '#fff0f5', 1);  // tengah
+  createCakeLayer(1, 1, '#ffc0cb', 2);    // atas
+
+  // Angka 17: dua balok
+  function createNumberBlock(x, color) {
+    const geometry = new THREE.BoxGeometry(0.3, 1, 0.3);
+    const material = new THREE.MeshStandardMaterial({ color });
+    const block = new THREE.Mesh(geometry, material);
+    block.position.set(x, 3, 0);
+    scene.add(block);
+  }
+
+  createNumberBlock(-0.2, 'gold'); // 1
+  createNumberBlock(0.4, 'gold');  // 7
+
+  // Kamera dan animasi
+  camera.position.z = 6;
+
+  function animate() {
+    requestAnimationFrame(animate);
+    scene.rotation.y += 0.005;
+    renderer.render(scene, camera);
+  }
+
+  animate();
+
+  // Resize responsif
+  window.addEventListener("resize", () => {
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    renderer.setSize(width, height);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+  });
+</script>
+    
   </style>
 </head>
 <body class="bg-pink-100 min-h-screen flex items-center justify-center">
@@ -65,6 +124,7 @@
 
     <p class="text-lg text-gray-700 mb-6 italic">
       "Kamu adalah alasan senyumku setiap hari. Aku bersyukur bisa memilikimu. Selamat ulang tahun, sayangku! 🎂💕"
+      
     <p class="text-lg text-gray-700 mb-6 italic">
       "Gimanaa sayanggg baguss gaa website buatan mas?"
     </p>
