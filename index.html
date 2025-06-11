@@ -22,7 +22,6 @@
         opacity: 1;
       }
     }
-  
 
     canvas#hearts {
       position: fixed;
@@ -44,65 +43,6 @@
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
       margin-bottom: 1rem;
     }
-<script>
-  const container = document.getElementById('cake-container');
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  container.appendChild(renderer.domElement);
-
-  // Pencahayaan
-  const light = new THREE.PointLight(0xffffff, 1);
-  light.position.set(10, 10, 10);
-  scene.add(light);
-
-  // Kue: Silinder 3 tumpuk
-  function createCakeLayer(radius, height, color, yOffset) {
-    const geometry = new THREE.CylinderGeometry(radius, radius, height, 32);
-    const material = new THREE.MeshStandardMaterial({ color });
-    const cylinder = new THREE.Mesh(geometry, material);
-    cylinder.position.y = yOffset;
-    scene.add(cylinder);
-  }
-
-  createCakeLayer(2, 1, '#ff69b4', 0);    // dasar
-  createCakeLayer(1.5, 1, '#fff0f5', 1);  // tengah
-  createCakeLayer(1, 1, '#ffc0cb', 2);    // atas
-
-  // Angka 17: dua balok
-  function createNumberBlock(x, color) {
-    const geometry = new THREE.BoxGeometry(0.3, 1, 0.3);
-    const material = new THREE.MeshStandardMaterial({ color });
-    const block = new THREE.Mesh(geometry, material);
-    block.position.set(x, 3, 0);
-    scene.add(block);
-  }
-
-  createNumberBlock(-0.2, 'gold'); // 1
-  createNumberBlock(0.4, 'gold');  // 7
-
-  // Kamera dan animasi
-  camera.position.z = 6;
-
-  function animate() {
-    requestAnimationFrame(animate);
-    scene.rotation.y += 0.005;
-    renderer.render(scene, camera);
-  }
-
-  animate();
-
-  // Resize responsif
-  window.addEventListener("resize", () => {
-    const width = container.clientWidth;
-    const height = container.clientHeight;
-    renderer.setSize(width, height);
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-  });
-</script>
-    
   </style>
 </head>
 <body class="bg-pink-100 min-h-screen flex items-center justify-center">
@@ -120,14 +60,12 @@
 
     <p class="text-lg text-gray-700 mb-6 leading-relaxed">
       Hari ini adalah hari yang sangat spesial karena orang yang paling aku cintai lahir ke dunia ini. Terima kasih sudah hadir dalam hidupku dan membuat semuanya lebih indah.
-    
     </p>
 
     <p class="text-lg text-gray-700 mb-6 italic">
       "Kamu adalah alasan senyumku setiap hari. Aku bersyukur bisa memilikimu. Selamat ulang tahun, sayangku! 🎂💕"
-      
-    <p class="text-lg text-gray-700 mb-6 italic">
-      "Gimanaa sayanggg baguss gaa website buatan mas?"
+
+      Bagus ga Website Buatan Mas sayangggg???
     </p>
 
     <!-- Input kata-kata -->
@@ -247,34 +185,6 @@
     }
 
     animate();
-    
-<!-- Kolom input kata-kata romantis -->
-<div class="relative bg-pink-50 border-4 border-pink-200 rounded-2xl p-4 mb-6 shadow-md">
-  <!-- Ikon cinta hiasan -->
-  <div class="absolute top-0 right-0 -mt-4 -mr-4 bg-white rounded-full p-2 shadow">
-    ❤️
-  </div>
-  <div class="absolute top-0 left-0 -mt-4 -ml-4 bg-white rounded-full p-2 shadow">
-    🌸
-  </div>
-
-  <!-- Textarea -->
-  <textarea id="customMessage"
-    class="w-full p-4 rounded-xl border border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-400 resize-none bg-white text-pink-800 placeholder-pink-400"
-    placeholder="Tulis pesan romantis kamu di sini..." rows="4"></textarea>
-
-  <!-- Tombol -->
-  <button onclick="showCustomMessage()"
-    class="mt-4 bg-gradient-to-r from-pink-400 to-pink-500 hover:from-pink-500 hover:to-pink-600 text-white font-bold py-2 px-6 rounded-full shadow-lg transition">
-    💌 Tampilkan Pesan
-  </button>
-</div>
-
-<!-- Tampilan pesan -->
-<div id="displayMessage"
-  class="text-pink-900 font-medium text-lg mt-4 p-4 bg-white rounded-xl shadow-inner hidden border border-pink-200">
-</div>
-    
   </script>
 </body>
 </html>
