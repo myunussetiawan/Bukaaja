@@ -70,15 +70,32 @@
       Bagus ga Website Buatan Mas sayangggg???
     </p>
 
-    <!-- Input kata-kata -->
-    <div class="mb-4">
-      <textarea id="customMessage" placeholder="Tulis pesan romantismu di sini..." rows="4"
-        class="w-full p-3 rounded-lg border border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-400 resize-none"></textarea>
-      <button onclick="showCustomMessage()" class="mt-3 bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-6 rounded-full transition">
-        Tampilkan Pesan 💌
-      </button>
-    </div>
+<!-- Kolom input kata-kata romantis -->
+<div class="relative bg-pink-50 border-4 border-pink-200 rounded-2xl p-4 mb-6 shadow-md">
+  <!-- Ikon cinta hiasan -->
+  <div class="absolute top-0 right-0 -mt-4 -mr-4 bg-white rounded-full p-2 shadow">
+    ❤️
+  </div>
+  <div class="absolute top-0 left-0 -mt-4 -ml-4 bg-white rounded-full p-2 shadow">
+    🌸
+  </div>
 
+  <!-- Textarea -->
+  <textarea id="customMessage"
+    class="w-full p-4 rounded-xl border border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-400 resize-none bg-white text-pink-800 placeholder-pink-400"
+    placeholder="Tulis pesan romantis kamu di sini..." rows="4"></textarea>
+
+  <!-- Tombol -->
+  <button onclick="showCustomMessage()"
+    class="mt-4 bg-gradient-to-r from-pink-400 to-pink-500 hover:from-pink-500 hover:to-pink-600 text-white font-bold py-2 px-6 rounded-full shadow-lg transition">
+    💌 Tampilkan Pesan
+  </button>
+</div>
+
+<!-- Tampilan pesan -->
+<div id="displayMessage"
+  class="text-pink-900 font-medium text-lg mt-4 p-4 bg-white rounded-xl shadow-inner hidden border border-pink-200">
+</div>
     <!-- Tampilan pesan -->
     <div id="displayMessage" class="text-pink-800 font-medium mt-4 text-lg hidden"></div>
 
